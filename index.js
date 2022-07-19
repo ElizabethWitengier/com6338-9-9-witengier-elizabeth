@@ -13,6 +13,8 @@ form.onsubmit = function(e) {
 }
 
 async function searchWeather(location) {
+    if (!location.includes(",")) location += ',us'
+
     try {
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=imperial&appid=a76b32bf5b491e65fd99110fed59d0ba`;
   
