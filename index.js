@@ -22,7 +22,6 @@ async function searchWeather(location) {
             showWeather(data)
         }
     } catch(err) {
-
     }
 }
 
@@ -33,23 +32,21 @@ showWeather = (data) => {
     else{
         if(data.cod === 200){
             
+        const { coord: {lat, lon}, main: {feels_like, temp}, name, sys: {country}, weather: {[0]: {description, icon}}} = data;
+        const dateTime = new Date(data.dt *1000);
+        const currentTime = dateTime.toLocaleTimeString('en-US', {
+            hour: 'numeric',
+            minute:'2-digit'
+        })
             
-            const { coord: {lat, lon}, main: {feels_like, temp}, name, sys: {country}, weather: {[0]: {description, icon}}} = data;
-            const dateTime = new Date(data.dt *1000);
-            const currentTime = dateTime.toLocaleTimeString('en-US', {
-                hour: 'numeric',
-                minute:'2-digit'
-              })
-            
-            sectionWeather.innerHTML = `
-                <h2>${name},  ${country}</h2>
-                <a href="https://www.google.com/maps/search/?api=1&query=${lat},${lon}" target="__BLANK">click to view map</a>
-                <img src="https://openweathermap.org/img/wn/${icon}@2x.png">
-                <p style="text-transform: capitalize;">${ description}</p><br>
-                <p>Current: ${temp} ° F</p>
-                <p>Feels like: ${feels_like} F</p><br>
-                <p>Last updated: ${currentTime}</p>
-            `;
+        sectionWeather.innerHTML = `
+            <h2>${name},  ${country}</h2>
+            <a href="https://www.google.com/maps/search/?api=1&query=${lat},${lon}" target="__BLANK">click to view map</a>
+            <img src="https://openweathermap.org/img/wn/${icon}@2x.png">
+            <p style="text-transform: capitalize;">${ description}</p><br>
+            <p>Current: ${temp} ° F</p>
+            <p>Feels like: ${feels_like} F</p><br>
+            <p>Last updated: ${currentTime}</p>`;
         }
     }    
 }
